@@ -1,0 +1,15 @@
+import urllib2
+import glob
+import os
+from BeautifulSoup import BeautifulSoup
+ 
+ 
+for filename in os.listdir("C:\\Documents and Settings\\Administrator\\My Documents\\Term_Crash\\dummy\\"):
+    print  filename
+    url = 'https://www.virustotal.com/en/file/'+filename+'/analysis/'
+    html = urllib2.urlopen(url).read()
+    data = BeautifulSoup(html)
+    for row in data('table', {'class' : 'table table-striped'})[0].tbody('tr'):
+      tds = row('td')
+      if tds[0].string.strip() == "Microsoft" :
+          print tds[1].string
